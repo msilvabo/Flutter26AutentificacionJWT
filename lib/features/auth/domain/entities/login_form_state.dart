@@ -1,4 +1,4 @@
-import '../../features/shared/shared.dart';
+import '../../../shared/shared.dart';
 
 class LoginFormState {
   final bool isPosting;

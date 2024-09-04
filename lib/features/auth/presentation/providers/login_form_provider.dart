@@ -1,7 +1,6 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:teslo_shop/domain/entities/login_form_state.dart';
+import 'package:teslo_shop/features/auth/domain/entities/login_form_state.dart';
 import 'package:teslo_shop/features/shared/shared.dart';
 
 part 'login_form_provider.g.dart';
