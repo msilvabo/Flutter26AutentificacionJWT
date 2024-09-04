@@ -57,13 +57,14 @@ class CustomTextFormField extends StatelessWidget {
           floatingLabelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
           enabledBorder: border,
           focusedBorder: border,
-          errorBorder: border.copyWith( borderSide: BorderSide( color: Colors.red.shade800 )),
-          focusedErrorBorder: border.copyWith( borderSide: BorderSide( color: Colors.red.shade800 )),
+          errorBorder: border.copyWith( borderSide: BorderSide( color: Colors.transparent)),
+          focusedErrorBorder: border.copyWith( borderSide: BorderSide( color: Colors.transparent)),
           isDense: true,
           label: label != null ? Text(label!) : null,
           hintText: hint,
           errorText: errorMessage,
           focusColor: colors.primary,
+          errorStyle: TextStyle(fontWeight: FontWeight.w600, fontSize:13, color: Colors.orange.shade800)
           // icon: Icon( Icons.supervised_user_circle_outlined, color: colors.primary, )
         ),
       ),
