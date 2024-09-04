@@ -1,5 +1,4 @@
-import 'dart:ffi';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:teslo_shop/domain/entities/login_form_state.dart';
@@ -46,4 +45,5 @@ class LoginFormNotifier extends _$LoginFormNotifier {
         isValid: Formz.validate([email, password]));
   }
 }
-// 3 LoginFormNotifier- Consumir desde afuera StateNotifierProvider 
+// 3 LoginFormNotifier- Consumir desde afuera StateNotifierProvider
+
