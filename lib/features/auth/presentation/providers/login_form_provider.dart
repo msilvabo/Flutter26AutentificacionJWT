@@ -1,48 +1,72 @@
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:teslo_shop/features/auth/domain/entities/login_form_state.dart';
+import 'package:teslo_shop/features/auth/presentation/providers/auth_provider.dart';
 import 'package:teslo_shop/features/shared/shared.dart';
 
-part 'login_form_provider.g.dart';
+//! 3 - StateNotifierProvider - consume afuera
+final loginFormProvider = StateNotifierProvider.autoDispose<LoginFormNotifier,LoginFormState>((ref) {
 
-//1 - state del provider
+  final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
 
-// 2 - implementar notifier   -- StateNotifier
 
-@riverpod
-class LoginFormNotifier extends _$LoginFormNotifier {
-  @override
-  LoginFormState build() => LoginFormState();
+  return LoginFormNotifier(
+    loginUserCallback:loginUserCallback
+  );
+});
 
-  onEmailChange(String value) {
+
+//! 2 - Como implementamos un notifier
+class LoginFormNotifier extends StateNotifier<LoginFormState> {
+
+  final Function(String, String) loginUserCallback;
+
+  LoginFormNotifier({
+    required this.loginUserCallback,
+  }): super( LoginFormState() );
+  
+  onEmailChange( String value ) {
     final newEmail = Email.dirty(value);
     state = state.copyWith(
-        email: newEmail, isValid: Formz.validate([newEmail, state.password]));
+      email: newEmail,
+      isValid: Formz.validate([ newEmail, state.password ])
+    );
   }
 
-  onPasswordChange(String value) {
+  onPasswordChanged( String value ) {
     final newPassword = Password.dirty(value);
     state = state.copyWith(
-        password: newPassword,
-        isValid: Formz.validate([newPassword, state.email]));
+      password: newPassword,
+      isValid: Formz.validate([ newPassword, state.email ])
+    );
   }
 
-  onFormSubmit() {
+  onFormSubmit() async {
     _touchEveryField();
-    if (!state.isValid) return;
-    print(state);
+
+    if ( !state.isValid ) return;
+
+    state = state.copyWith(isPosting: true);
+
+    await loginUserCallback( state.email.value, state.password.value );
+
+    state = state.copyWith(isPosting: false);
   }
 
   _touchEveryField() {
-    final email = Email.dirty(state.email.value);
+
+    final email    = Email.dirty(state.email.value);
     final password = Password.dirty(state.password.value);
 
     state = state.copyWith(
-        isFormPosted: true,
-        email: email,
-        password: password,
-        isValid: Formz.validate([email, password]));
+      isFormPosted: true,
+      email: email,
+      password: password,
+      isValid: Formz.validate([ email, password ])
+    );
+
   }
+
 }
-// 3 LoginFormNotifier- Consumir desde afuera StateNotifierProvider
 

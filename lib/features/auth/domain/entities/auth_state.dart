@@ -1,7 +1,7 @@
 
 import '../domain.dart';
 
-enum AuthStatus { checking, authenticated, notAuthentucated }
+enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthState {
   final AuthStatus authStatus;
